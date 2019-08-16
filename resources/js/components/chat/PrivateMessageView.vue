@@ -6,16 +6,21 @@
 
     <section class="content">
       <div class="row">
-        <div class="col-md-2 col-sm-2 col-with-right-border">
-          <private-message-sidebar></private-message-sidebar>
-        </div>
-
-        <div class="col-sm-8">
-          <h3>{{pmStore.message.data.subject}}</h3>
-          <p>From: {{pmStore.message.data.sender.email}} <span class="pull-right">{{pmStore.message.data.sender.created_at}}</span></p>
-          <div class="message">
-            {{pmStore.message.data.message}}
-          </div>
+        <div class="detal col-8 py-3">
+          <form v-on:submit.prevent="handleFormSubmit()">
+            <!-- <h3>{{pmStore.message}}</h3> -->
+            <h3>Asunto: {{pmStore.message.subject}}</h3><span class="">{{pmStore.message.created_at}}</span>
+            <div class="chat-log" id="prueba">
+              <prueba v-for="(message, index) in pmStore.messageRec" :key="index" :messages = "message"></prueba>
+            </div>
+            <br>
+            <div class="chat-composer">
+            <input type="text" placeholder="escribe tu mensaje..." v-model="messageText">  
+            <button class="btn btn-primary">
+              <i class="fa fa-save"></i> Enviar
+            </button>
+            </div>
+          </form>
         </div>
       </div>
     </section>
@@ -30,16 +35,79 @@
     props: {
         id: {required: true}
     },
+    data() {
+      return{
+        messageText: '',
+        message: '',
+      }
+
+    },
     created () {
-      this.$store.dispatch('getPrivateMessageById',this.id)
+      this.$store.dispatch('getSubjectMessageById',this.id);
+
+      this.$store.dispatch('setUserMessagesRec', this.id);
     },
     computed: {
       ...mapState({
         pmStore: state => state.PrivateMessageStore
       })
     },
-    destroyed () {
-      this.$store.dispatch('clearMessageView')
+    methods: {
+      handleFormSubmit () {
+        console.log(this.pmStore.message)
+        let postData = {
+          'sender': this.pmStore.message.sender_id,
+          'receiver': this.pmStore.message.receiver_id,
+          'subject_id': this.id,
+          'message': this.messageText
+          
+        }
+        this.$store.dispatch('sendPrivateMessage', postData)
+          .then(response => {
+            this.messageText = '';
+          })
+      }
+    },
+    sockets: {
+      message(data) {
+        let message = JSON.parse(data); 
+        this.$store.dispatch('newMessageNotification', message);
+      }
     }
   }
 </script>
+<style>
+  div.detal {
+    border: none;
+    background: #F1F1F1;
+  }
+  div.detal h4{
+    background: #3483D1;
+    color: white;
+  }
+  .chat-composer{
+    display: flex;
+  }
+
+  .chat-composer input {
+    flex: 1 auto;
+  }
+
+  .chat-composer button {
+    border-radius: 0;
+  }
+  .chat-log .chat-message:nth-child(even){
+  background-color: #ccc;
+ }
+
+ .empty {
+  padding: 1rem;
+  text-align: center;
+ }
+ #prueba{
+  height: 400px;
+  overflow-y: auto;
+  background: white;
+
+ }
+</style>

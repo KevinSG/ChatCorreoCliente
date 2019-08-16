@@ -25,22 +25,23 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware(["auth"])->group( function(){
+// Route::middleware(["auth"])->group( function(){
 
     Route::get('/index', function () {
-    	$user = Auth::user();
-	    return view('index', compact('user'));
+    	// $user = Auth::user();
+	    return view('index');
 	});
 
-	Route::get('/enviados', function () {
-		$user = Auth::user();
-	    return view('chat/enviados', compact('user'));
-	});
+	// Route::get('/enviados', function () {
+	// 	$user = Auth::user();
+	//     return view('chat/enviados', compact('user'));
+	// });
 	Route::get('/enviar', function () {
-		$user = Auth::user();
-	    return view('chat/enviar', compact('user'));
+		// $user = Auth::user();
+	    return view('chat/enviar');
 	});
 	Route::get('/detalles/{id}', function ($id) {
+		// $user = Auth::user();
 	    return view('chat/detalles',compact('id'));
 	});
-});
+// });

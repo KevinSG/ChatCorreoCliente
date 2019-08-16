@@ -42,7 +42,7 @@ Vue.component('private-message-sidebar', require('./components/chat/PrivateMessa
 Vue.component('privatemessagecompose', require('./components/chat/PrivateMessageCompose.vue').default);
 Vue.component('privatemessagesent', require('./components/chat/PrivateMessageSent.vue').default);
 Vue.component('privatemessageview', require('./components/chat/PrivateMessageView.vue').default);
-//Vue.component('PrivateMessageCompose', require('./components/chat/PrivateMessageCompose.vue').default);
+Vue.component('prueba', require('./components/chat/PrivateMessageNotificationDropdown.vue').default);
 
 
 /**

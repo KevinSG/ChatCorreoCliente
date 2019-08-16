@@ -2,14 +2,11 @@
   <div class="container">
     <section class="header">
       <h1 class="page-title">Mesajes privados - <small>Mensajes Enviados</small></h1>
+      <br>
     </section>
 
     <section class="content">
       <div class="row">
-        <div class="col-md-2 col-sm-2 col-with-right-border">
-          <private-message-sidebar></private-message-sidebar>
-        </div>
-
         <div class="col-sm-8">
           <!-- <h1>{{pmStore.messageSent.data}}</h1> -->
           <table class="table table-striped table-hover table-bordered table-condensed message-table">
@@ -22,7 +19,7 @@
             </thead>
             <tbody>
               <tr v-for="message in pmStore.messageSent.data">
-                 <td>{{message.receiver.name}}</td>
+                 <td>{{message.sender.name}}</td>
                 <td>
                   <a :href="`/detalles/${message.id}`">{{message.subject}}</a>
                 </td>
@@ -51,7 +48,7 @@
       })
     },
     created () {
-      this.$store.dispatch('setUserMessagesSent', this.user)
+      this.$store.dispatch('setUserSubjectSent', this.user)
     }
   }
 </script>

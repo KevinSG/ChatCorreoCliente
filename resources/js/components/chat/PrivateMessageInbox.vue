@@ -2,14 +2,11 @@
 	<div class="container">
 		<section class="header">
       		<h1 class="page-title">Mesajes privados - <small>Recibidos</small></h1>
+          <br>
     	</section>
 
 	    <section class="content">
 	      <div class="row">
-	        <div class="col-md-2 col-sm-2 col-with-right-border">
-	          <private-message-sidebar></private-message-sidebar>
-	        </div>
-
 	        <div class="col-sm-8">
 	        	<!-- <h1>{{pmStore.messageRec.data}}</h1> -->
 	          <table class="table table-striped table-hover table-bordered table-condensed message-table">
@@ -21,7 +18,7 @@
               </tr>
             </thead>
 	            <tbody>
-	             <tr v-for="message in pmStore.messageRec.data" v-bind:class="[message.read == 0 ? 'unread' : 'read']">
+	             <tr v-for="message in pmStore.subjectRec" v-bind:class="[message.read == 0 ? 'unread' : 'read']">
 	                 <td>{{message.sender.name}}</td>
 	                <td>
 	                  <a :href="`/detalles/${message.id}`">{{message.subject}}</a>
@@ -56,14 +53,13 @@ import {mapState} from 'vuex'
       })
     },
     created () {
-    	this.$store.dispatch('setUserMessagesRec', this.user);
+    	this.$store.dispatch('setUserSubjectsRec', this.user);
     },
     sockets: {
-      // messageRead (data) {
-      //   let message = JSON.data
-      //   this.$store.dispatch('messageReadNotification', message)
-      //   console.log('messageReadNotification')
-      // }
+      message(data) {
+        let message = JSON.parse(data);
+        this.$store.dispatch('newSubjectNotification', message);
+      }
     }
   }
 </script>

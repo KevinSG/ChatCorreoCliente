@@ -2,27 +2,32 @@ import Vue from 'vue'
 import _ from 'lodash'
 
 const state = {
-  notifications: [],
   messageRec: [],
+  subjectRec: [],
   messageSent: [],
+  subjectSent: [],
   message: {
     subject: '',
     message: '',
     sender: {}
   },
-  users: []
+  users: ''
 }
 
 const mutations = {
-  // SET_USER_PM_NOTIFICATIONS (state, notifications) {
-  //   state.notifications = notifications
-  // },
   SET_MESSAGES_REC (state, messages) {
-    state.messageRec = messages;
+    //console.log(messages.data);
+    state.messageRec = messages.data;
   },
-  SET_MESSAGE_VIEW (state, message) {
-    state.message = message
-    console.log(state.message);
+  SET_SUBJECT_REC (state, subjects) {
+    //console.log(subjects.data);
+    state.subjectRec = subjects.data;
+  },
+  // SET_MESSAGE_VIEW (state, message) {
+  //   state.message = message
+  // },
+  SET_SUBJECT_VIEW (state, message) {
+    state.message = message.data
   },
   CLEAR_MESSAGE_VIEW (state) {
     state.message = {
@@ -35,72 +40,82 @@ const mutations = {
     state.users = users.data
   },
   SEND_PRIVATE_MESSAGE (state, message) {
-    state.messageSent.push(message)
+    //console.log(state)
+    state.messageSent.push(message.data);
   },
-  SET_MESSAGES_SENT (state, messages) {
+  SEND_SUBJECT (state, message) {
+    //console.log(state.subjectSent);
+    state.subjectSent.push(message);
+  },
+  SET_SUBJECT_SENT (state, messages) {
     state.messageSent = messages
   },
-  // NEW_PM_NOTIFICATION (state, message) {
-  //   state.notifications.unshift(message)
-  //   state.messageRec.unshift(message)
-  // },
-  // MESSAGE_READ_NOTIFICATION (state, message) {
-  //   _.forEach(state.messageRec, function (value, key) {
-  //     if (message.id === value.id) {
-  //       state.messageRec[key] = value
-  //     }
-  //   })
-
-  //   _.forEach(state.notifications, function (value, key) {
-  //     if (message.id === value.id) {
-  //       state.notifications.splice(key, 1)
-  //     }
-  //   })
-  // }
+  NEW_PM_NOTIFICATION (state, message) {
+    state.messageRec.unshift(message)
+  },
+  NEW_SJ_NOTIFICATION (state, message) {
+    //console.log(state, message);
+    state.subjectRec.unshift(message)
+  }
 }
 
 const actions = {
-  // getUserNotifications: ({commit}) => {
-  //   let postData = {}
-  //   return axios.post(`/api/v1/get-private-messages`, postData, {headers: getHeader()})
-  //     .then(response => {
-  //       Vue.$logger('info', 'getUserNotifications response', response)
-  //       commit('SET_USER_PM_NOTIFICATIONS', response.body.data)
-  //     })
-  // },
-  setUserMessagesRec: ({commit}, user) => {
-    let postData = {id: user.id}
-    console.log(user.id);
-    //console.log(user);
+
+//--------------------------------------------------------------------------------- 
+//Hace una consulta de los mensajes y el asunto 
+  setUserMessagesRec: ({commit}, subject) => {
+    let postData = {id: subject}
     return axios.post(`/api/v1/get-private-messages/{id}`, postData)
       .then(response => {
-        console.log(response);
         commit('SET_MESSAGES_REC', response.data)
       })
   },
-  getPrivateMessageById: ({commit}, id) => {
-    let postData = {id: id}
-    return axios.post(`/api/v1/get-private-message/{id}`, postData)
+  setUserSubjectsRec: ({commit}, user) => {
+    let postData = {id: user.id}
+    return axios.post(`/api/v1/get-subject-messages/{id}`, postData)
       .then(response => {
-        commit('SET_MESSAGE_VIEW', response.data)
+        commit('SET_SUBJECT_REC', response.data)
       })
   },
-  clearMessageView: ({commit}) => {
-    commit('CLEAR_MESSAGE_VIEW')
+//----------------------------------------------------------------------------------
+//  muestra en detalle el asunto
+  // getPrivateMessageById: ({commit}, id) => {
+  //   let postData = {id: id}
+  //   return axios.post(`/api/v1/get-private-message/{id}`, postData)
+  //     .then(response => {
+  //       commit('SET_MESSAGE_VIEW', response.data)
+  //     })
+  // },
+  getSubjectMessageById: ({commit}, id) => {
+    let postData = {id: id}
+    return axios.post(`/api/v1/get-subject-message/{id}`, postData)
+      .then(response => {
+        commit('SET_SUBJECT_VIEW', response.data)
+      })
   },
+//----------------------------------------------------------------------------------
+  // clearMessageView: ({commit}) => {
+  //   commit('CLEAR_MESSAGE_VIEW')
+  // },
   sendPrivateMessage: ({commit}, postData) => {
     return axios.post(`/api/v1/send-private-message`, postData)
       .then(response => {
-        console.log(response)
         commit('SEND_PRIVATE_MESSAGE', response.data)
         return response
       })
   },
-  setUserMessagesSent: ({commit}, user) => {
-    let postData = {id: user.id}
-    return axios.post(`/api/v1/get-private-messages-sent/{id}`, postData)
+  sendSubject: ({commit}, postData) => {
+    return axios.post(`/api/v1/send-subject`, postData)
       .then(response => {
-        commit('SET_MESSAGES_SENT', response.data)
+        commit('SEND_SUBJECT', response.data)
+        return response
+      })
+  },
+  setUserSubjectSent: ({commit}, user) => {
+    let postData = {id: user.id}
+    return axios.post(`/api/v1/get-subject-messages-sent/{id}`, postData)
+      .then(response => {
+        commit('SET_SUBJECT_SENT', response.data)
         return response
       })
   },
@@ -113,12 +128,12 @@ const actions = {
         }
       })
   },
-  // newMessageNotification: ({commit}, message) => {
-  //   commit('NEW_PM_NOTIFICATION', message)
-  // },
-  // messageReadNotification: ({commit}, message) => {
-  //   commit('MESSAGE_READ_NOTIFICATION', message)
-  // }
+  newMessageNotification: ({commit}, message) => {
+    commit('NEW_PM_NOTIFICATION', message)
+  },
+  newSubjectNotification: ({commit}, message) => {
+    commit('NEW_SJ_NOTIFICATION', message)
+  },
 }
 
 export default {

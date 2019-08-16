@@ -28,11 +28,17 @@ Route::get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1'], function () {
 
-	Route::get('user-list', 'PrivateMessageController@getUserList');
+	
+
+    Route::post('send-subject', 'SubjectMessageController@sendSubjectMessage');
+    Route::post('get-subject-messages-sent/{id}', 'SubjectMessageController@getSubjectMessageSent');
+    Route::post('get-subject-messages/{id}', 'SubjectMessageController@getSubjectMessages');
+    Route::post('get-subject-message/{id}', 'SubjectMessageController@getSubjectMessageById');
 
     Route::post('get-private-message-notifications', 'PrivateMessageController@getUserNotifications');
     Route::post('get-private-messages/{id}', 'PrivateMessageController@getPrimateMessages');
-    Route::post('get-private-message/{id}', 'PrivateMessageController@getPrivateMessageById');
-    Route::post('get-private-messages-sent/{id}', 'PrivateMessageController@getPrivateMessageSent');
     Route::post('send-private-message', 'PrivateMessageController@sendPrivateMessage');
+    //Route::post('get-private-message/{id}', 'PrivateMessageController@getPrivateMessageById');
+    Route::get('user-list', 'PrivateMessageController@getUserList');
+    
 });

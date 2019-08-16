@@ -2,14 +2,13 @@
 
 namespace App;
 
-
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class PrivateMessage extends Model
+class SubjectMessage extends Model
 {
-   protected $fillable = ['sender_id','receiver_id','subject_message_id','message','read'];
+   protected $fillable = ['sender_id','receiver_id','subject','read'];
 
    protected $appends = ['sender', 'receiver'];
 
@@ -29,7 +28,7 @@ class PrivateMessage extends Model
       return User::where('id', $this->receiver_id)->first();
   }
 
-  public function subject(){
-      return $this->belongsTo('App\Subject');
+  public function privatemessage(){
+    return $this->hasMany('App\PrivateMessage');
   }
 }

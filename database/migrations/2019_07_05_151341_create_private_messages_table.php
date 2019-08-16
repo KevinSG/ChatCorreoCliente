@@ -17,7 +17,7 @@ class CreatePrivateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('sender_id')->unsigned();
             $table->integer('receiver_id')->unsigned();
-            $table->string('subject');
+            $table->integer('subject_message_id');
             $table->text('message');
             $table->boolean('read');
             $table->timestamps();
