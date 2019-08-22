@@ -1767,13 +1767,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {// user: {required: true}
@@ -6570,7 +6563,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pointer {\n  cursor: pointer;\n}\na.href-active {\n  color: #333333;\n  background-color: transparent;\n}\nli>a.href {\n  color: #fff;\n  background-color: #337ab7;\n}\n.col-with-right-border {\n  border-right: 1px solid $border-color;\n}\n", ""]);
+exports.push([module.i, "\n.pointer {\r\n  cursor: pointer;\n}\na.href-active {\r\n  color: #333333;\r\n  background-color: transparent;\n}\nli>a.href {\r\n  color: #fff;\r\n  background-color: #337ab7;\n}\n.col-with-right-border {\r\n  border-right: 1px solid $border-color;\n}\r\n", ""]);
 
 // exports
 
@@ -38239,8 +38232,6 @@ var render = function() {
               }
             },
             [
-              _c("div", { staticClass: "form-group" }),
-              _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "" } }, [_vm._v("Asunto")]),
                 _vm._v(" "),
@@ -38316,8 +38307,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("section", { staticClass: "header" }, [
       _c("h1", { staticClass: "page-title" }, [
-        _vm._v("Mesajes privados - "),
-        _c("small", [_vm._v("Enviar mensaje")])
+        _vm._v("Iniciar conversación - "),
+        _c("small", [_vm._v("Crear nuevo asunto PQR")])
       ]),
       _vm._v(" "),
       _c("br")
@@ -38329,7 +38320,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-primary" }, [
       _c("i", { staticClass: "fa fa-save" }),
-      _vm._v(" Enviar\n          ")
+      _vm._v(" Iniciar conversación\n          ")
     ])
   }
 ]
