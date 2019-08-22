@@ -54,7 +54,6 @@
     },
     methods: {
       handleFormSubmit () {
-        console.log(this.pmStore.message)
         let postData = {
           'sender': this.pmStore.message.sender_id,
           'receiver': this.pmStore.message.receiver_id,
