@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section class="header">
-      <h1 class="page-title">Mesajes privados - <small>Enviar mensaje</small></h1>
+      <h1 class="page-title">Iniciar conversación - <small>Crear nuevo asunto PQR</small></h1>
       <br>
     </section>
 
@@ -9,13 +9,6 @@
       <div class="row">
         <div class="col-sm-8">
           <form v-on:submit.prevent="handleFormSubmit()">
-            <div class="form-group">
-              <!-- <label>{{pmStore.users[0].email}}</label> -->
-              <!-- <multiselect v-model="userSelected" placeholder="Seleciona un usuario" :options="pmStore.users" :searchable="true" :close-on-select="true" :show-labels="true" track-by="id" label="name">
-              </multiselect> -->
-
-              <!-- <input type="text" v-model="userSelected" class="form-control" disabled="true" :placeholder="pmStore.users[0].email"> -->
-            </div>
 
             <div class="form-group">
               <label for="">Asunto</label>
@@ -28,7 +21,7 @@
             </div>
 
             <button class="btn btn-primary">
-              <i class="fa fa-save"></i> Enviar
+              <i class="fa fa-save"></i> Iniciar conversación
             </button>
           </form>
         </div>
