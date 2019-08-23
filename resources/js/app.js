@@ -14,7 +14,7 @@ window.Vue = require('vue');
 window.Vuetify = require('vuetify');
 Vue.use(new VueSocketIO({
     debug: false,
-    connection: window.location.hostname + ':6001',
+    connection: window.location.hostname + ':8890',
     vuex: {
         store,
         actionPrefix: 'SOCKET_',
